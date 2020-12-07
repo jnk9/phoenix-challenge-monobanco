@@ -1,0 +1,42 @@
+<div class="container is-widescreen pb-2">
+  <section class="hero has-background-primary is-medium">
+    <div class="hero-body">
+      <div class="container">
+        <div class="columns">
+
+          <div class="column is-one-third">
+            <h1 class="title has-text-white">
+              Total Balance
+            </h1>
+          </div>
+
+          <div class="column">
+            <div class="card">
+              <div class="card-content has-text-centered">
+                <p class="title">
+                  <%= @available_balance %>
+                </p>
+                <p class="subtitle">
+                  Available
+                </p>
+              </div>
+              <footer class="card-footer">
+                <p class="card-footer-item has-text-danger-dark">
+                  <span>
+                    <%= @last_withdraw %> Last Withdraw
+                  </span>
+                </p>
+                <p class="card-footer-item has-text-success-dark">
+                  <span>
+                    <%= @last_deposit %> Last Deposit
+                  </span>
+                </p>
+              </footer>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
