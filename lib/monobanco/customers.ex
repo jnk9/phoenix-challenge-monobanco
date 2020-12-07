@@ -18,7 +18,21 @@ defmodule Monobanco.Customers do
 
   """
   def list_transactions do
-    Repo.all(Transaction)
+    Repo.all(from t in Transaction, order_by: [desc: t.id])
+  end
+
+  def available_balance_transaction do
+    total_deposit = Repo.one(from t in Transaction, where: t.is_deposit == true, select: sum(t.amount))
+    total_withdraw = Repo.one(from t in Transaction, where: t.is_deposit == false, select: sum(t.amount))
+    Enum.sum([total_deposit] ++ [-total_withdraw])
+  end
+
+  def last_withdraw do
+    Repo.one(from t in Transaction, where: t.is_deposit == false, select: t.amount, limit: 1, order_by: [desc: t.id])
+  end
+
+  def last_deposit do
+    Repo.one(from t in Transaction, where: t.is_deposit == true, select: t.amount, limit: 1, order_by: [desc: t.id])
   end
 
   @doc """

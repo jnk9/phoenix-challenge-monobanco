@@ -11,45 +11,26 @@
             </div>
             <div class="columns">
               <div class="column is-11 is-offset-1">
-
+                <%= for transaction <- @lastest_transactions do %>
                 <div class="card mb-2">
                   <div class="card-content">
                     <div class="level is-mobile">
                       <div class="level-left">
                         <div>
-                          <p class="heading">Internet</p>
-                          <p class="title">Traspaso De:Juan Carlos Concha Hernandez</p>
+                          <p class="heading"><%= transaction.category%></p>
+                          <p class="title"><%= transaction.description%></p>
                         </div>
                       </div>
                       <div class="level-right">
                         <div>
-                          <p class="heading has-text-right">30/12/2020</p>
-                          <p class="title"> - $ 161.985</p>
+                          <p class="heading has-text-right"><%= transaction.inserted_at%></p>
+                          <p class="title"> <%= transaction.amount%></p>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-
-                <div class="card mb-2">
-                  <div class="card-content">
-                    <div class="level is-mobile">
-                      <div class="level-left">
-                        <div>
-                          <p class="heading">Panamericana Norte</p>
-                          <p class="title">Pago De Creditos M/n</p>
-                        </div>
-                      </div>
-                      <div class="level-right">
-                        <div>
-                          <p class="heading has-text-right">03/12/2020</p>
-                          <p class="title"> - $ 39.437</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
+                <% end %>
               </div>
             </div>
           </div>
