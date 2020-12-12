@@ -22,9 +22,16 @@ defmodule Monobanco.Customers do
   end
 
   def available_balance_transaction do
-    total_deposit = Repo.one(from t in Transaction, where: t.is_deposit == true, select: sum(t.amount))
-    total_withdraw = Repo.one(from t in Transaction, where: t.is_deposit == false, select: sum(t.amount))
-    Enum.sum([total_deposit] ++ [-total_withdraw])
+    total_deposit = case Repo.one(from t in Transaction, where: t.is_deposit == true, select: sum(t.amount)) do
+      {value, _remainder} -> value
+      :nil -> 0
+    end
+    total_withdraw = case Repo.one(from t in Transaction, where: t.is_deposit == false, select: sum(t.amount)) do
+      {value, _remainder} -> value
+      :nil -> 0
+    end
+
+    total_deposit - total_withdraw
   end
 
   def last_withdraw do
