@@ -1,3 +1,3 @@
-defmodule BalanceComponent do
+defmodule TransactionComponent do
   use Phoenix.LiveComponent
 end
