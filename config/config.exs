@@ -12,7 +12,7 @@ config :monobanco,
 
 # Configures the endpoint
 config :monobanco, MonobancoWeb.Endpoint,
-  url: [host: "localhost"],
+  url: [host: System.get_env("APP_NAME") <> ".gigalixirapp.com", port: 443],
   secret_key_base: "8caEhSCFgxdkfN8JuP1bIoXYmiw6j5OrHMMtlqORpA4HEav0mo40CZK71kA7CLLF",
   render_errors: [view: MonobancoWeb.ErrorView, accepts: ~w(html json), layout: false],
   pubsub_server: Monobanco.PubSub,
