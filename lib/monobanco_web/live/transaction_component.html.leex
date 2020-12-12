@@ -1,0 +1,18 @@
+<div class="card mb-2">
+  <div class="card-content">
+    <div class="level is-mobile">
+      <div class="level-left">
+        <div>
+          <p class="heading"><%= @transaction.category%></p>
+          <p class="title"><%= @transaction.description%></p>
+        </div>
+      </div>
+      <div class="level-right">
+        <div>
+          <p class="heading has-text-right"><%= format_date(@transaction)%></p>
+          <p class="title <%= class_deposit(@transaction) %>"> <%= @transaction.amount%></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
