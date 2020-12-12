@@ -8,30 +8,38 @@ defmodule Monobanco.Customers do
 
   alias Monobanco.Customers.Transaction
 
-  @doc """
-  Returns the list of transactions.
+  @topic inspect(__MODULE__)
 
-  ## Examples
+  def subscribe do
+    Phoenix.PubSub.subscribe(Monobanco.PubSub, @topic)
+  end
 
-      iex> list_transactions()
-      [%Transaction{}, ...]
+  def subscribe(transaction_id) do
+    Phoenix.PubSub.subscribe(Monobanco.PubSub, @topic <> "#{transaction_id}")
+  end
 
-  """
   def list_transactions do
     Repo.all(from t in Transaction, order_by: [desc: t.id])
   end
 
-  def available_balance_transaction do
-    total_deposit = case Repo.one(from t in Transaction, where: t.is_deposit == true, select: sum(t.amount)) do
-      {value, _remainder} -> value
+  def sum_deposit do
+    sum = Repo.one(from t in Transaction, where: t.is_deposit == true, select: sum(t.amount))
+    case is_float(sum) do
+      :true -> sum
       :nil -> 0
     end
-    total_withdraw = case Repo.one(from t in Transaction, where: t.is_deposit == false, select: sum(t.amount)) do
-      {value, _remainder} -> value
-      :nil -> 0
-    end
+  end
 
-    total_deposit - total_withdraw
+  def sum_withdraw do
+    sum = Repo.one(from t in Transaction, where: t.is_deposit == false, select: sum(t.amount))
+    case is_float(sum) do
+      :true -> sum
+      :nil -> 0
+    end
+  end
+
+  def available_balance_transaction do
+    sum_deposit-sum_withdraw
   end
 
   def last_withdraw do
@@ -74,6 +82,7 @@ defmodule Monobanco.Customers do
     %Transaction{}
     |> Transaction.changeset(attrs)
     |> Repo.insert()
+    |> notify_subscribers([:transaction, :created])
   end
 
   @doc """
@@ -122,4 +131,12 @@ defmodule Monobanco.Customers do
   def change_transaction(%Transaction{} = transaction, attrs \\ %{}) do
     Transaction.changeset(transaction, attrs)
   end
+
+  defp notify_subscribers({:ok, result}, event) do
+    Phoenix.PubSub.broadcast(Monobanco.PubSub, @topic, {__MODULE__, event, result})
+    Phoenix.PubSub.broadcast(Monobanco.PubSub, @topic <> "#{result.id}", {__MODULE__, event, result})
+    {:ok, result}
+  end
+
+  defp notify_subscribers({:error, reason}, _event), do: {:error, reason}
 end

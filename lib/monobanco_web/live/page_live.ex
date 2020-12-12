@@ -4,6 +4,8 @@ defmodule MonobancoWeb.PageLive do
 
   @impl true
   def mount(_params, _session, socket) do
+    Customers.subscribe()
+    Phoenix.PubSub.subscribe(Monobanco.PubSub, "transactions")
     transactions = Customers.list_transactions()
     {
       :ok,
@@ -15,5 +17,9 @@ defmodule MonobancoWeb.PageLive do
         lastest_transactions: transactions
       )
     }
+  end
+
+  def hola do
+    "hola"
   end
 end
