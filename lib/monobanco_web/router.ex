@@ -20,10 +20,11 @@ defmodule MonobancoWeb.Router do
     live "/", PageLive, :index
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", MonobancoWeb do
-  #   pipe_through :api
-  # end
+   scope "/api", MonobancoWeb do
+     pipe_through :api
+
+     resources "/transactions", TransactionController, only: [:create]
+   end
 
   # Enables LiveDashboard only for development
   #
