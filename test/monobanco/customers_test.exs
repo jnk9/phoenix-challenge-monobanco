@@ -6,8 +6,8 @@ defmodule Monobanco.CustomersTest do
   describe "transactions" do
     alias Monobanco.Customers.Transaction
 
-    @valid_attrs %{amount: 120.5, category: "some category", description: "some description", is_deposit: true}
-    @update_attrs %{amount: 456.7, category: "some updated category", description: "some updated description", is_deposit: false}
+    @valid_attrs %{amount: 120, category: "some category", description: "some description", is_deposit: true}
+    @update_attrs %{amount: 456, category: "some updated category", description: "some updated description", is_deposit: false}
     @invalid_attrs %{amount: nil, category: nil, description: nil, is_deposit: nil}
 
     def transaction_fixture(attrs \\ %{}) do
@@ -31,7 +31,7 @@ defmodule Monobanco.CustomersTest do
 
     test "create_transaction/1 with valid data creates a transaction" do
       assert {:ok, %Transaction{} = transaction} = Customers.create_transaction(@valid_attrs)
-      assert transaction.amount == 120.5
+      assert transaction.amount.amount == 120
       assert transaction.category == "some category"
       assert transaction.description == "some description"
       assert transaction.is_deposit == true
@@ -44,7 +44,7 @@ defmodule Monobanco.CustomersTest do
     test "update_transaction/2 with valid data updates the transaction" do
       transaction = transaction_fixture()
       assert {:ok, %Transaction{} = transaction} = Customers.update_transaction(transaction, @update_attrs)
-      assert transaction.amount == 456.7
+      assert transaction.amount.amount == 456
       assert transaction.category == "some updated category"
       assert transaction.description == "some updated description"
       assert transaction.is_deposit == false

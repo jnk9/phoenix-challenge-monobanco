@@ -5,7 +5,7 @@ defmodule MonobancoWeb.TransactionControllerTest do
   alias Monobanco.Customers.Transaction
 
   @create_attrs %{
-    amount: 120.5,
+    amount: 120,
     category: "some category",
     description: "some description",
     is_deposit: true
@@ -29,7 +29,7 @@ defmodule MonobancoWeb.TransactionControllerTest do
 
       assert %{
                "id" => id,
-               "amount" => 120.5,
+               "amount" => 120,
                "category" => "some category",
                "description" => "some description",
                "is_deposit" => true
