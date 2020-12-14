@@ -12,8 +12,8 @@ defmodule MonobancoWeb.PageLive do
       assign(
         socket, 
         available_balance: to_string(Customers.available_balance_transaction()),
-        last_withdraw: Customers.last_withdraw,
-        last_deposit: Customers.last_deposit,
+        last_withdraw: Customers.last_withdraw(),
+        last_deposit: Customers.last_deposit(),
         lastest_transactions: transactions
       )
     }
