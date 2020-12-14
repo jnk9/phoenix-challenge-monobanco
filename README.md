@@ -1,5 +1,61 @@
 # Monobanco
 
+# Create Transaction
+
+**URL** : `/api/transactions`
+
+**Method** : `POST`
+
+**Permissions required** : None
+
+
+Provide name of Account to be created.
+
+```json
+{
+"transaction":
+ {
+    "amount": Integer,
+    "category": String,
+    "description": String,
+    "is_deposit": Boolean
+  }
+}
+```
+
+**Data example** All fields must be sent.
+
+```json
+{
+"transaction": {
+  "amount": 10000,
+  "category":"category",
+  "description":"description",
+  "is_deposit":true
+  }
+}
+```
+
+## Success Response
+
+**Condition** : If everything is OK and an Account didn't exist for this User.
+
+**Code** : `201 CREATED`
+
+**Content example**
+
+```json
+{
+  "data":{
+    "id":1,
+    "amount": 10000,
+    "category":"category",
+    "description":"description",
+    "is_deposit":true
+  }
+}
+```
+
 To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`
