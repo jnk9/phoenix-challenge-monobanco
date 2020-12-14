@@ -3,7 +3,7 @@ defmodule Monobanco.Customers.Transaction do
   import Ecto.Changeset
 
   schema "transactions" do
-    field :amount, :float
+    field :amount, Money.Ecto.Amount.Type
     field :category, :string
     field :description, :string
     field :is_deposit, :boolean, default: true
