@@ -9,7 +9,7 @@
 **Permissions required** : None
 
 
-Provide name of Account to be created.
+Provide name of Transaction to be created.
 
 ```json
 {
@@ -37,8 +37,6 @@ Provide name of Account to be created.
 ```
 
 ## Success Response
-
-**Condition** : If everything is OK and an Account didn't exist for this User.
 
 **Code** : `201 CREATED`
 
