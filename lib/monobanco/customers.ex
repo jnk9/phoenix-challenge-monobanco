@@ -24,22 +24,26 @@ defmodule Monobanco.Customers do
 
   def sum_deposit do
     sum = Repo.one(from t in Transaction, where: t.is_deposit == true, select: sum(t.amount))
-    case is_float(sum) do
-      :true -> sum
-      :false -> 0
+    case sum && is_integer(sum.amount) do
+      true -> sum.amount
+      false -> 0
+      nil -> 0
     end
   end
 
   def sum_withdraw do
     sum = Repo.one(from t in Transaction, where: t.is_deposit == false, select: sum(t.amount))
-    case is_float(sum) do
-      :true -> sum
-      :false -> 0
+    case sum && is_integer(sum.amount) do
+      true -> sum.amount
+      false -> 0
+      nil -> 0
     end
   end
 
   def available_balance_transaction do
-    sum_deposit()-sum_withdraw()
+    m = Money.new(sum_deposit()-sum_withdraw())
+
+    m
   end
 
   def last_withdraw do

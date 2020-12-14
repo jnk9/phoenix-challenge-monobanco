@@ -14,7 +14,7 @@ defmodule MonobancoWeb.TransactionView do
     %{id: transaction.id,
       category: transaction.category,
       description: transaction.description,
-      amount: transaction.amount,
+      amount: transaction.amount.amount,
       is_deposit: transaction.is_deposit}
   end
 end
